@@ -1,7 +1,3 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
-pkgs.mkShell {
-  buildInputs = with pkgs; [
-    direnv go goimports gopls git
-  ];
-}
+pkgs.mkShell { buildInputs = with pkgs; [ direnv go_1_18 gopls gotools git ]; }
