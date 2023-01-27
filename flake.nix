@@ -11,10 +11,8 @@
         devShells.default = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [
             git
-            go-outline
             go_1_19
             gopls
-            gotools
           ];
         };
       });
