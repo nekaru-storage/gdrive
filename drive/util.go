@@ -31,7 +31,7 @@ func formatSize(bytes int64, forceBytes bool) string {
 		return fmt.Sprintf("%v B", bytes)
 	}
 
-	units := []string{"B", "KB", "MB", "GB", "TB", "PB"}
+	units := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
 
 	var i int
 	value := float64(bytes)
