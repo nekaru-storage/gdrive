@@ -8,7 +8,7 @@ import (
 )
 
 const Name = "gdrive"
-const Version = "3.0.10"
+const Version = "3.0.13"
 
 const DefaultMaxFiles = 30
 const DefaultMaxChanges = 100
@@ -152,6 +152,12 @@ func main() {
 						Patterns:     []string{"--timeout"},
 						Description:  fmt.Sprintf("Set timeout in seconds, use 0 for no timeout. Timeout is reached when no data is transferred in set amount of seconds, default: %d", DefaultTimeout),
 						DefaultValue: DefaultTimeout,
+					},
+					cli.BoolFlag{
+						Name:        "quiet",
+						Patterns:    []string{"--quiet"},
+						Description: "Disable noisy stdout logging",
+						OmitValue:   true,
 					},
 				),
 			},

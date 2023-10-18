@@ -23,6 +23,7 @@ type DownloadArgs struct {
 	Stdout    bool
 	Timeout   time.Duration
 	Try       int
+	Quiet     bool
 }
 
 func (self *Drive) Download(args DownloadArgs) error {
@@ -151,7 +152,9 @@ func (self *Drive) downloadBinary(f *drive.File, args DownloadArgs) (int64, int6
 
 	//Check if file exists to skip
 	if args.Skip && fileExists(fpath) {
-		fmt.Printf("File '%s' already exists, skipping\n", fpath)
+		if !args.Quiet {
+			fmt.Printf("File '%s' already exists, skipping\n", fpath)
+		}
 		return 0, 0, nil
 	}
 

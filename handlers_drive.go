@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -63,6 +62,7 @@ func downloadHandler(ctx cli.Context) {
 		Delete:    args.Bool("delete"),
 		Recursive: args.Bool("recursive"),
 		Stdout:    args.Bool("stdout"),
+		Quiet:     args.Bool("quiet"),
 		Progress:  progressWriter(args.Bool("noProgress")),
 		Timeout:   durationInSeconds(args.Int64("timeout")),
 	})
@@ -394,7 +394,7 @@ func getOauthClient(args cli.Arguments) (*http.Client, error) {
 	}
 
 	tokenPath := ConfigFilePath(configDir, TokenFilename)
-	return auth.NewFileSourceClient(clientId, clientSecret, tokenPath, authCodePrompt)
+	return auth.NewFileSourceClient(clientId, clientSecret, tokenPath, auth.AuthCodeHTTP)
 }
 
 func getConfigDir(args cli.Arguments) string {
@@ -417,21 +417,6 @@ func newDrive(args cli.Arguments) *drive.Drive {
 	}
 
 	return client
-}
-
-func authCodePrompt(url string) func() string {
-	return func() string {
-		fmt.Println("Authentication needed")
-		fmt.Println("Go to the following url in your browser:")
-		fmt.Printf("%s\n\n", url)
-		fmt.Print("Enter verification code: ")
-
-		var code string
-		if _, err := fmt.Scan(&code); err != nil {
-			fmt.Printf("Failed reading code: %s", err.Error())
-		}
-		return code
-	}
 }
 
 func progressWriter(discard bool) io.Writer {
